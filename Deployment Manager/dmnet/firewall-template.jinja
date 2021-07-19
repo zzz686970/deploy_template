@@ -1,0 +1,18 @@
+resources:
+- name: {{ env["name"] }}
+  type: compute.v1.firewall
+  properties:
+    network: {{ properties["network"] }}
+    sourceRanges: ["0.0.0.0/0"]
+    allowed:
+    - IPProtocol: {{ properties["IPProtocol"] }}
+      ports: {{ properties["Port"] }}
+
+## gcloud deployment-manager types list | grep firewall
+## These properties define:
+
+## network: Network that the firewall rule applies to
+## sourceRange: Source IP ranges that traffic is allowed from
+## IPProtocol: Specific protocol that the rule applies to
+## ports: Specific ports of that protocol
+## The allow property specifies that when traffic matches these parameters, traffic is allowed. You are setting the sourceRanges property to 0.0.0.0/0 to allow ingress ## from any IP source address. All other properties are defined as template properties, which you will provide values for from the top-level configuration.

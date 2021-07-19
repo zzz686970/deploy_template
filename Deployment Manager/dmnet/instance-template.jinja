@@ -1,0 +1,29 @@
+resources:
+- name: {{ env["name"] }}
+  type: compute.v1.instance  
+  properties:
+     machineType: zones/{{ properties["zone"] }}/machineTypes/{{ properties["machineType"] }}
+     zone: {{ properties["zone"] }}
+     networkInterfaces:
+      - network: {{ properties["network"] }}
+        subnetwork: {{ properties["subnetwork"] }}
+        accessConfigs:
+        - name: External NAT
+          type: ONE_TO_ONE_NAT
+     disks:
+      - deviceName: {{ env["name"] }}
+        type: PERSISTENT
+        boot: true
+        autoDelete: true
+        initializeParams:
+          sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+
+## gcloud deployment-manager types list | grep instance
+## These properties define:
+## 
+## machineType: Machine type and zone
+## zone: Instance zone
+## networkInterfaces: Network and subnetwork that VM is attached to
+## accessConfigs: Required to give the instance a public IP address (required in this lab). To create instances with only an internal IP address, remove the accessConfigs section.
+## disks: The boot disk and its name and image
+## Again, most properties are defined as template properties, which you will provide values for from the top-level configuration.

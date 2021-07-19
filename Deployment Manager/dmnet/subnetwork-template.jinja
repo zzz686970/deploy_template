@@ -1,0 +1,17 @@
+resources:
+- name: {{ env["name"] }}
+  type: compute.v1.subnetwork
+  properties:
+    ipCidrRange: {{ properties["ipCidrRange"] }}
+    network: {{ properties["network"] }}
+    region: {{ properties["region"] }}
+
+
+## gcloud deployment-manager types list | grep subnetwork
+
+##These properties define:
+
+## ipCidrRange: IP address range of the subnet
+## network: Name of the subnet's network
+## region: Region that the subnet is created in
+## In this template, you are declaring arbitrary template properties instead of hard-coding specific IP ranges, networks, and regions. When you use the template, you will provide values for these properties in the top-level configuration.
